@@ -1,6 +1,9 @@
 package org.example.carmarketplace.Models;
 
+import org.example.carmarketplace.ENUMs.*;
+
 import jakarta.persistence.*;
+import org.example.carmarketplace.Models.Feedback;
 
 import java.util.List;
 
@@ -29,9 +32,9 @@ public class User {
     @Column(length=50, nullable = false)
     private String Password;
 
-    @ManyToOne
-    @JoinColumn(name = "RoleId", referencedColumnName = "id")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50, nullable = false)
+    private RoleName role;
 
     @OneToMany(mappedBy = "writtenBy")
     private List<Feedback> feedbacksWritten;
@@ -41,7 +44,7 @@ public class User {
 
 
 
-    public User(String firstName, String middleName, String lastName, String email, String phoneNumber, String password, Role role) {
+    public User(String firstName, String middleName, String lastName, String email, String phoneNumber, String password, RoleName role) {
         FirstName = firstName;
         MiddleName = middleName;
         LastName = lastName;
@@ -75,7 +78,7 @@ public class User {
     public String getPassword() {
         return Password;
     }
-    public Role getRole() {
+    public RoleName getRole() {
         return role;
     }
 
@@ -101,7 +104,7 @@ public class User {
     public void setPassword(String password) {
         Password = password;
     }
-    public void setRole(Role role) {
+    public void setRole(RoleName role) {
         this.role = role;
     }
     @Override
