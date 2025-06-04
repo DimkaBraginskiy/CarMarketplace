@@ -8,6 +8,7 @@ import org.example.carmarketplace.Models.User;
 import org.example.carmarketplace.Repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +31,12 @@ public class UserService {
     public User createUser(UserRequestDto dto){
         User user = userMapper.toEntity(dto);
         return userRepository.save(user);
+    }
+
+    public List<UserResponseDto> getAllUsers(){
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::toDto)
+                .toList();
     }
 }

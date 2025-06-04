@@ -43,6 +43,9 @@ public class Vehicle {
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_type", nullable = false, length = 50)
+    private VehicleType vehicleType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_condition", nullable = false, length = 50)
@@ -69,7 +72,7 @@ public class Vehicle {
     private List<FuelType> fuelTypes;
 
 
-    public Vehicle(Long id, String vin, String licensePlate, LocalDate productionDate, Integer mileage, String engineName, Double horsePower, User owner, Brand brand, VehicleCondition vehicleCondition, GearboxType gearboxType, List<ComfortFeatures> comfortFeatures, List<FuelType> fuelTypes) {
+    public Vehicle(Long id, String vin, String licensePlate, LocalDate productionDate, Integer mileage, String engineName, Double horsePower, User owner, Brand brand, VehicleCondition vehicleCondition, GearboxType gearboxType, List<ComfortFeatures> comfortFeatures, List<FuelType> fuelTypes, VehicleType vehicleType) {
         this.id = id;
         this.vin = vin;
         this.licensePlate = licensePlate;
@@ -83,6 +86,7 @@ public class Vehicle {
         this.gearboxType = gearboxType;
         this.comfortFeatures = comfortFeatures;
         this.fuelTypes = fuelTypes;
+        this.vehicleType = vehicleType;
     }
 
     public Vehicle() {
@@ -140,6 +144,10 @@ public class Vehicle {
         this.fuelTypes = fuelTypes;
     }
 
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     public Long getId() {
         return id;
     }
@@ -190,5 +198,9 @@ public class Vehicle {
 
     public List<FuelType> getFuelTypes() {
         return fuelTypes;
+    }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
     }
 }
