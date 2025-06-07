@@ -29,16 +29,20 @@ public class PublicationService {
         this.mapper = mapper;
     }
 
-    public void createPublicationWithVehicle(PublicationVehicleRequestDto dto) {
-        User owner = userRepo.findById(dto.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
-        Brand brand = brandRepo.findById(dto.getBrandId()).orElseThrow(() -> new RuntimeException("brand not found"));
-        List<ComfortFeatures> comfortFeatures = comfortRepo.findAllById(dto.getComfortFeatureIds());
-        List<FuelType> fuelTypes = fuelRepo.findAllById(dto.getFuelTypeIds());
+//    public void createPublicationWithVehicle(PublicationVehicleRequestDto dto) {
+//        User owner = userRepo.findById(dto.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
+//        Brand brand = brandRepo.findById(dto.getBrandId()).orElseThrow(() -> new RuntimeException("brand not found"));
+//        List<ComfortFeatures> comfortFeatures = comfortRepo.findAllById(dto.getComfortFeatureIds());
+//        List<FuelType> fuelTypes = fuelRepo.findAllById(dto.getFuelTypeIds());
+//
+//        Vehicle vehicle = mapper.toVehicle(dto, owner, brand, comfortFeatures, fuelTypes);
+//        vehicle = vehicleRepo.save(vehicle);
+//
+//        Publication publication = mapper.toPublication(dto, vehicle);
+//        publicationRepo.save(publication);
+//    }
 
-        Vehicle vehicle = mapper.toVehicle(dto, owner, brand, comfortFeatures, fuelTypes);
-        vehicle = vehicleRepo.save(vehicle);
-
-        Publication publication = mapper.toPublication(dto, vehicle);
-        publicationRepo.save(publication);
+    public List<Publication> getAllActivePublications() {
+        return publicationRepo.findByIsActiveTrue();
     }
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Marketplace1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+    <a class="navbar-brand fw-bold" href="/" style="font-size: 1.5rem;">
+
+        <img src="/img/logo.png"
+             alt="Logo"
+             height="100"
+             class="me-2">
+        Car Marketplace
+    </a>
+    <div class="ms-auto">
+        <a href="/register" class="btn btn-outline-primary me-2">Register</a>
+        <a href="/login" class="btn btn-primary">Login</a>
+    </div>
+</nav>
+
+<!-- Vehicle Publications -->
+<div class="container mt-4" th:each="pub : ${publications}">
+    <div class="card mb-3 p-3 bg-light d-flex flex-row align-items-center">
+
+
+
+<!--        <img th:src="@{'/vehicle/' + ${pub.vehicleId} + '/image'}"-->
+<!--             class="me-3"-->
+<!--             style="width: 150px; height: 100px; object-fit: cover; border-radius: 6px;">-->
+
+        <img th:src="@{'/img/vehicle-' + ${pub.vehicleId} + '.jpeg'}"
+             class="me-3"
+             style="width: 150px; height: 100px; object-fit: cover; border-radius: 6px;">
+
+        <div class="flex-grow-1">
+            <h5 th:text="${pub.brandName} + ' ' + ${pub.engineName}">Car Name</h5>
+            <p><b>Gearbox type:</b> <span th:text="${pub.gearboxType}"></span></p>
+            <p><b>Year:</b> <span th:text="${pub.year}"></span></p>
+            <p><b>Fuel:</b> <span th:text="${pub.fuelType}"></span></p>
+            <p><b>Color:</b> <span th:text="${pub.color}"></span></p>
+            <p><b>HP:</b> <span th:text="${pub.horsePower}"></span></p>
+            <p><b>Condition:</b> <span th:text="${pub.condition}"></span></p>
+        </div>
+        <div class="text-end fw-bold fs-5">
+            <span th:text="'Price: ' + ${pub.price} + '$'"></span>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

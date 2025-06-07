@@ -19,10 +19,10 @@ public class PublicationController {
         this.publicationService = publicationService;
     }
 
-    @PostMapping
-    public ResponseEntity<String> createPublicationWithVehicle(@RequestBody PublicationVehicleRequestDto dto){
-            publicationService.createPublicationWithVehicle(dto);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body("Publication and Vehicle created successfully");
-    }
+//    @PostMapping
+//    public ResponseEntity<String> createPublicationWithVehicle(@RequestBody PublicationVehicleRequestDto dto){
+//        publicationService.createPublicationWithVehicle(dto);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Publication and Vehicle created successfully");
+//    }
 }

@@ -15,22 +15,22 @@ public class User {
     private Long id;
 
     @Column(length=50, nullable = false)
-    private String FirstName;
+    private String firstName;
 
     @Column(length=50, nullable = true)
-    private String MiddleName;
+    private String middleName;
 
     @Column(length=50, nullable = false)
-    private String LastName;
+    private String lastName;
 
     @Column(length=50, nullable = false)
-    private String Email;
+    private String email;
 
     @Column(length=20, nullable = false)
-    private String PhoneNumber;
+    private String phoneNumber;
 
-    @Column(length=50, nullable = false)
-    private String Password;
+    @Column(length=100, nullable = false)
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
@@ -43,81 +43,99 @@ public class User {
     private List<Feedback> feedbacksReceived;
 
 
-
-    public User(String firstName, String middleName, String lastName, String email, String phoneNumber, String password, RoleName role) {
-        FirstName = firstName;
-        MiddleName = middleName;
-        LastName = lastName;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Password = password;
+    public User(Long id, String firstName, String middleName, String lastName, String email, String phoneNumber, String password, RoleName role, List<Feedback> feedbacksWritten, List<Feedback> feedbacksReceived) {
+        this.id = id;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
         this.role = role;
+        this.feedbacksWritten = feedbacksWritten;
+        this.feedbacksReceived = feedbacksReceived;
     }
+
     public User() {
     }
-
 
     public Long getId() {
         return id;
     }
+
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
+
     public String getMiddleName() {
-        return MiddleName;
+        return middleName;
     }
+
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
+
     public String getEmail() {
-        return Email;
+        return email;
     }
+
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
     }
+
     public String getPassword() {
-        return Password;
+        return password;
     }
+
     public RoleName getRole() {
         return role;
     }
 
+    public List<Feedback> getFeedbacksWritten() {
+        return feedbacksWritten;
+    }
+
+    public List<Feedback> getFeedbacksReceived() {
+        return feedbacksReceived;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
+
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
+
     public void setMiddleName(String middleName) {
-        MiddleName = middleName;
+        this.middleName = middleName;
     }
+
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
+
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
+
     public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
+
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
+
     public void setRole(RoleName role) {
         this.role = role;
     }
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", FirstName='" + FirstName + '\'' +
-                ", MiddleName='" + MiddleName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Email='" + Email + '\'' +
-                ", PhoneNumber='" + PhoneNumber + '\'' +
-                ", Password='" + Password + '\'' +
-                ", role=" + role +
-                '}';
+
+    public void setFeedbacksWritten(List<Feedback> feedbacksWritten) {
+        this.feedbacksWritten = feedbacksWritten;
+    }
+
+    public void setFeedbacksReceived(List<Feedback> feedbacksReceived) {
+        this.feedbacksReceived = feedbacksReceived;
     }
 }

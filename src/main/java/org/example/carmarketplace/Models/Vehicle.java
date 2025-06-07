@@ -55,6 +55,15 @@ public class Vehicle {
     @Column(name = "gearbox_type", nullable = false, length = 50)
     private GearboxType gearboxType;
 
+    @ManyToOne
+    @JoinColumn(name = "color_id", nullable = false)
+    private Color color;
+
+    @Lob
+    @Column(name = "image", nullable = true, columnDefinition = "MEDIUMBLOB")
+    private byte[] image;
+
+
     @ManyToMany
     @JoinTable(
             name = "comfort_features_vehicle",
@@ -72,7 +81,7 @@ public class Vehicle {
     private List<FuelType> fuelTypes;
 
 
-    public Vehicle(Long id, String vin, String licensePlate, LocalDate productionDate, Integer mileage, String engineName, Double horsePower, User owner, Brand brand, VehicleCondition vehicleCondition, GearboxType gearboxType, List<ComfortFeatures> comfortFeatures, List<FuelType> fuelTypes, VehicleType vehicleType) {
+    public Vehicle(Long id, String vin, String licensePlate, LocalDate productionDate, Integer mileage, String engineName, Double horsePower, User owner, Brand brand, VehicleType vehicleType, VehicleCondition vehicleCondition, GearboxType gearboxType, Color color, List<ComfortFeatures> comfortFeatures, List<FuelType> fuelTypes) {
         this.id = id;
         this.vin = vin;
         this.licensePlate = licensePlate;
@@ -82,11 +91,12 @@ public class Vehicle {
         this.horsePower = horsePower;
         this.owner = owner;
         this.brand = brand;
+        this.vehicleType = vehicleType;
         this.vehicleCondition = vehicleCondition;
         this.gearboxType = gearboxType;
+        this.color = color;
         this.comfortFeatures = comfortFeatures;
         this.fuelTypes = fuelTypes;
-        this.vehicleType = vehicleType;
     }
 
     public Vehicle() {
@@ -202,5 +212,21 @@ public class Vehicle {
 
     public VehicleType getVehicleType() {
         return vehicleType;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
