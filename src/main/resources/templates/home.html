@@ -19,19 +19,22 @@
         Car Marketplace
     </a>
 
-    <div class="d-flex ms-auto">
+    <div class="d-flex ms-auto align-items-center">
 
-        <sec:authorize access="isAuthenticated()">
+        <!-- Show only when logged in -->
+        <div sec:authorize="isAuthenticated()">
             <a th:href="@{/user/details}" class="nav-link">
                 <i class="bi bi-person-circle fs-4"></i>
             </a>
-        </sec:authorize>
+        </div>
 
-    <sec:authorize access="isAnonymous()">
-        <a th:href="@{/login}" class="btn btn-outline-primary me-2">Login</a>
-        <a th:href="@{/register}" class="btn btn-outline-success">Register</a>
-    </sec:authorize>
-</div>
+        <!-- Show only when NOT logged in -->
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}" class="btn btn-outline-primary me-2">Login</a>
+            <a th:href="@{/register}" class="btn btn-outline-success">Register</a>
+        </div>
+
+    </div>
 
 </nav>
 
