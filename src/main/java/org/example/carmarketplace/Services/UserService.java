@@ -39,4 +39,8 @@ public class UserService {
                 .map(userMapper::toDto)
                 .toList();
     }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
