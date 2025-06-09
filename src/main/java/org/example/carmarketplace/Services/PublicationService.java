@@ -45,4 +45,8 @@ public class PublicationService {
     public List<Publication> getAllActivePublications() {
         return publicationRepo.findByIsActiveTrue();
     }
+
+    public List<Publication> searchPublications(String keyword) {
+        return publicationRepo.findByKeyword(keyword.toLowerCase());
+    }
 }

@@ -38,6 +38,22 @@
 
 </nav>
 
+<!-- Search Bar -->
+<div class="container mt-4">
+    <form th:action="@{/}" method="get" class="row g-2 align-items-center bg-primary bg-opacity-10 p-3 rounded">
+        <!-- Keyword Search -->
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="Search for brand, model, or description...">
+        </div>
+
+        <!-- Search Button -->
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+
 <!-- Vehicle Publications -->
 <div class="container mt-4" th:each="pub : ${publications}">
     <div class="card mb-3 p-3 bg-light d-flex flex-row align-items-center">
