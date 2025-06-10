@@ -1,6 +1,8 @@
 package org.example.carmarketplace.Services;
 
 import org.example.carmarketplace.DTOs.Request.PublicationVehicleRequestDto;
+import org.example.carmarketplace.DTOs.Request.VehicleFilterDto;
+import org.example.carmarketplace.ENUMs.VehicleType;
 import org.example.carmarketplace.Mappers.PublicationMapper;
 import org.example.carmarketplace.Models.*;
 import org.example.carmarketplace.Repositories.*;
@@ -46,7 +48,12 @@ public class PublicationService {
         return publicationRepo.findByIsActiveTrue();
     }
 
-    public List<Publication> searchPublications(String keyword) {
-        return publicationRepo.findByKeyword(keyword.toLowerCase());
+    public List<Publication> searchPublications(VehicleFilterDto filter) {
+        return publicationRepo.advancedSearch(filter);
+    }
+
+    public Publication getPublicationById(Long id) {
+        return publicationRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Publication not found"));
     }
 }

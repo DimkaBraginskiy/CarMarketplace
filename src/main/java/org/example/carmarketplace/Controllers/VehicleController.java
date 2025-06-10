@@ -1,35 +1,37 @@
 package org.example.carmarketplace.Controllers;
 
+import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
+import org.example.carmarketplace.Mappers.PublicationMapper;
+import org.example.carmarketplace.Models.Publication;
+import org.example.carmarketplace.Services.PublicationService;
 import org.example.carmarketplace.Services.VehicleService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-@Repository("/vehicle")
 public class VehicleController {
 
     private final VehicleService vehicleService;
+    private final PublicationService publicationService;
 
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, PublicationService publicationService) {
         this.vehicleService = vehicleService;
+        this.publicationService = publicationService;
     }
 
-    @GetMapping("/{id}/image")
-    public ResponseEntity<byte[]> getVehicleImageById(@PathVariable Long id) {
-        byte[] image = vehicleService.getVehicleImageById(id);
+    @GetMapping("/vehicle/{id}")
+    public String viewVehicleDetails(@PathVariable Long id, Model model) {
+        Publication pub = publicationService.getPublicationById(id);
 
-        if (image == null || image.length == 0) {
-            return ResponseEntity.notFound().build();
-        }
+        PublicationVehicleResponseDto dto = PublicationMapper.toDetailedDto(pub); // reuse or extend existing DTO
+        model.addAttribute("vehicle", dto);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(image, headers, HttpStatus.OK);
+        return "vehicle-details"; // HTML template name
     }
 }

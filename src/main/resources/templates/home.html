@@ -40,48 +40,107 @@
 
 <!-- Search Bar -->
 <div class="container mt-4">
-    <form th:action="@{/}" method="get" class="row g-2 align-items-center bg-primary bg-opacity-10 p-3 rounded">
-        <!-- Keyword Search -->
-        <div class="col-md-10">
-            <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="Search for brand, model, or description...">
+    <form th:action="@{/}" method="get" th:object="${filter}" class="row g-2 bg-primary bg-opacity-10 p-3 rounded">
+
+        <div class="col-md-2">
+            <select class="form-select" th:field="*{vehicleType}">
+                <option value="">Vehicle Type</option>
+                <option th:each="t : ${T(org.example.carmarketplace.ENUMs.VehicleType).values()}"
+                        th:value="${t}" th:text="${t}"></option>
+            </select>
         </div>
 
-        <!-- Search Button -->
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">Search</button>
+            <select class="form-select" th:field="*{brandId}">
+                <option value="">Brand</option>
+                <option th:each="b : ${brands}" th:value="${b.id}" th:text="${b.name}"/>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" th:field="*{fuelTypeId}">
+                <option value="">Fuel Type</option>
+                <option th:each="f : ${fuelTypes}" th:value="${f.id}" th:text="${f.name}"/>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" class="form-control" th:field="*{yearFrom}" placeholder="Year From"/>
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" class="form-control" th:field="*{yearTo}" placeholder="Year To"/>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" th:field="*{colorId}">
+                <option value="">Color</option>
+                <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"/>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" th:field="*{condition}">
+                <option value="">Condition</option>
+                <option th:each="c : ${T(org.example.carmarketplace.ENUMs.VehicleCondition).values()}"
+                        th:value="${c}" th:text="${c}"></option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" th:field="*{gearboxType}">
+                <option value="">Gearbox Type</option>
+                <option th:each="g : ${T(org.example.carmarketplace.ENUMs.GearboxType).values()}"
+                        th:value="${g}" th:text="${g}"></option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" class="form-control" th:field="*{hpFrom}" placeholder="HP From"/>
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" class="form-control" th:field="*{hpTo}" placeholder="HP To"/>
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" class="form-control" th:field="*{keyword}" placeholder="Search keyword"/>
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">Search</button>
         </div>
     </form>
+
 </div>
 
 
 <!-- Vehicle Publications -->
-<div class="container mt-4" th:each="pub : ${publications}">
-    <div class="card mb-3 p-3 bg-light d-flex flex-row align-items-center">
+<div class="container mt-4">
+    <div th:each="pub : ${publications}">
+        <a th:href="@{'/vehicle/' + ${pub.vehicleId}}" class="text-decoration-none text-dark">
+            <div class="card mb-3 p-3 bg-light d-flex flex-row align-items-center">
+                <img th:src="@{'/img/vehicle-' + ${pub.vehicleId} + '.jpeg'}"
+                     class="me-3"
+                     style="width: 150px; height: 100px; object-fit: cover; border-radius: 6px;">
 
-
-
-<!--        <img th:src="@{'/vehicle/' + ${pub.vehicleId} + '/image'}"-->
-<!--             class="me-3"-->
-<!--             style="width: 150px; height: 100px; object-fit: cover; border-radius: 6px;">-->
-
-        <img th:src="@{'/img/vehicle-' + ${pub.vehicleId} + '.jpeg'}"
-             class="me-3"
-             style="width: 150px; height: 100px; object-fit: cover; border-radius: 6px;">
-
-        <div class="flex-grow-1">
-            <h5 th:text="${pub.brandName} + ' ' + ${pub.engineName}">Car Name</h5>
-            <p><b>Gearbox type:</b> <span th:text="${pub.gearboxType}"></span></p>
-            <p><b>Year:</b> <span th:text="${pub.year}"></span></p>
-            <p><b>Fuel:</b> <span th:text="${pub.fuelType}"></span></p>
-            <p><b>Color:</b> <span th:text="${pub.color}"></span></p>
-            <p><b>HP:</b> <span th:text="${pub.horsePower}"></span></p>
-            <p><b>Condition:</b> <span th:text="${pub.condition}"></span></p>
-        </div>
-        <div class="text-end fw-bold fs-5">
-            <span th:text="'Price: ' + ${pub.price} + '$'"></span>
-        </div>
+                <div class="flex-grow-1">
+                    <h5 th:text="${pub.brandName} + ' ' + ${pub.engineName}">Car Name</h5>
+                    <p><b>Gearbox type:</b> <span th:text="${pub.gearboxType}"></span></p>
+                    <p><b>Year:</b> <span th:text="${pub.year}"></span></p>
+                    <p><b>Fuel:</b> <span th:text="${pub.fuelType}"></span></p>
+                    <p><b>Color:</b> <span th:text="${pub.color}"></span></p>
+                    <p><b>HP:</b> <span th:text="${pub.horsePower}"></span></p>
+                    <p><b>Condition:</b> <span th:text="${pub.condition}"></span></p>
+                </div>
+                <div class="text-end fw-bold fs-5">
+                    <span th:text="'Price: ' + ${pub.price} + '$'"></span>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
+
 
 
 

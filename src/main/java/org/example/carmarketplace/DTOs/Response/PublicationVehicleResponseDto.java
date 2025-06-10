@@ -11,8 +11,12 @@ public class PublicationVehicleResponseDto {
     private double horsePower;
     private String condition;
     private double price;
+    private String description;
 
-    public PublicationVehicleResponseDto(Long vehicleId, String brandName, String engineName, String gearboxType, int year, String fuelType, String color, double horsePower, String condition, double price) {
+    public PublicationVehicleResponseDto(Long vehicleId, String brandName, String engineName,
+                                         String gearboxType, int year, String fuelType,
+                                         String color, double horsePower, String condition,
+                                         double price, String description) {
         this.vehicleId = vehicleId;
         this.brandName = brandName;
         this.engineName = engineName;
@@ -23,6 +27,16 @@ public class PublicationVehicleResponseDto {
         this.horsePower = horsePower;
         this.condition = condition;
         this.price = price;
+        this.description = description;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setBrandName(String brandName) {
