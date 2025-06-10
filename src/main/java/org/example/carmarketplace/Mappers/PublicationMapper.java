@@ -1,6 +1,7 @@
 package org.example.carmarketplace.Mappers;
 
 import org.example.carmarketplace.DTOs.Request.PublicationVehicleRequestDto;
+import org.example.carmarketplace.DTOs.Response.PublicationVehicleDetailedResponseDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
 import org.example.carmarketplace.Models.*;
 import org.springframework.stereotype.Component;
@@ -27,9 +28,10 @@ public class PublicationMapper {
         );
     }
 
-    public static PublicationVehicleResponseDto toDetailedDto(Publication publication) {
+    public static PublicationVehicleDetailedResponseDto toDetailedDto(Publication publication) {
         Vehicle v = publication.getVehicle();
-        return new PublicationVehicleResponseDto(
+        User owner = v.getOwner();
+        return new PublicationVehicleDetailedResponseDto(
                 v.getId(),
                 v.getBrand().getName(),
                 v.getEngineName(),
@@ -40,7 +42,11 @@ public class PublicationMapper {
                 v.getHorsePower(),
                 v.getVehicleCondition().toString(),
                 publication.getPrice(),
-                publication.getDescription() // assume this constructor accepts description as well
+                publication.getDescription(),
+                owner.getUsername(),
+                owner.getEmail(),
+                owner.getPhoneNumber()
         );
     }
 }
+

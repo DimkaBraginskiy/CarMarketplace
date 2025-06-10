@@ -49,10 +49,19 @@
     </div>
 
     <div class="bg-primary bg-opacity-10 p-3 rounded ms-4 text-center" style="min-width: 200px;">
-      <div class="fw-bold">UserName</div>
-      <i class="bi bi-person-circle fs-2"></i>
-      <div class="my-2">To access personal info<br>please register or login</div>
-      <a th:href="@{/login}" class="btn btn-outline-primary">Register/Login</a>
+      <div sec:authorize="isAuthenticated()">
+        <div class="fw-bold" th:text="${vehicle.ownerName}">Owner Name</div>
+        <i class="bi bi-person-circle fs-2"></i>
+        <div class="my-2" th:text="${vehicle.ownerEmail}">email@example.com</div>
+        <div class="my-2" th:text="${vehicle.ownerPhone}">123-456-7890</div>
+      </div>
+
+      <div sec:authorize="isAnonymous()">
+        <div class="fw-bold">UserName</div>
+        <i class="bi bi-person-circle fs-2"></i>
+        <div class="my-2">To access personal info<br>please register or login</div>
+        <a th:href="@{/login}" class="btn btn-outline-primary">Register/Login</a>
+      </div>
     </div>
 
   </div>

@@ -1,5 +1,6 @@
 package org.example.carmarketplace.Controllers;
 
+import org.example.carmarketplace.DTOs.Response.PublicationVehicleDetailedResponseDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
 import org.example.carmarketplace.Mappers.PublicationMapper;
 import org.example.carmarketplace.Models.Publication;
@@ -28,10 +29,8 @@ public class VehicleController {
     @GetMapping("/vehicle/{id}")
     public String viewVehicleDetails(@PathVariable Long id, Model model) {
         Publication pub = publicationService.getPublicationById(id);
-
-        PublicationVehicleResponseDto dto = PublicationMapper.toDetailedDto(pub); // reuse or extend existing DTO
+        PublicationVehicleDetailedResponseDto dto = PublicationMapper.toDetailedDto(pub);
         model.addAttribute("vehicle", dto);
-
-        return "vehicle-details"; // HTML template name
+        return "vehicle-details";
     }
 }

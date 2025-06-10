@@ -59,6 +59,13 @@ public class User {
     public User() {
     }
 
+    public String getUsername() {
+        return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
+    }
+
+
+
+
     public Long getId() {
         return id;
     }
