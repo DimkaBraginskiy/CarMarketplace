@@ -4,6 +4,7 @@ import org.example.carmarketplace.DTOs.Request.PublicationVehicleRequestDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleDetailedResponseDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
 import org.example.carmarketplace.Models.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -47,6 +48,36 @@ public class PublicationMapper {
                 owner.getEmail(),
                 owner.getPhoneNumber()
         );
+    }
+
+    public Vehicle toVehicle(PublicationVehicleRequestDto dto, User owner, Brand brand,
+                             List<ComfortFeatures> comfortFeatures, List<FuelType> fuelTypes) {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVin(dto.getVin());
+        vehicle.setLicensePlate(dto.getLicensePlate());
+        vehicle.setProductionDate(dto.getProductionDate());
+        vehicle.setMileage(dto.getMileage());
+        vehicle.setEngineName(dto.getEngineName());
+        vehicle.setHorsePower(dto.getHorsePower());
+        vehicle.setOwner(owner);
+        vehicle.setBrand(brand);
+        vehicle.setVehicleType(dto.getVehicleType());
+        vehicle.setVehicleCondition(dto.getVehicleCondition());
+        vehicle.setGearboxType(dto.getGearboxType());
+        vehicle.setComfortFeatures(comfortFeatures);
+        vehicle.setFuelTypes(fuelTypes);
+        return vehicle;
+    }
+
+    public Publication toPublication(PublicationVehicleRequestDto dto, Vehicle vehicle) {
+
+        Publication publication = new Publication();
+        publication.setActive(true);
+        publication.setDescription(dto.getDescription());
+        publication.setPrice(dto.getPrice());
+        publication.setVehicle(vehicle);
+
+        return publication;
     }
 }
 

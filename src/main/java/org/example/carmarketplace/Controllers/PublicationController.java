@@ -5,12 +5,13 @@ import org.example.carmarketplace.Services.PublicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/api/publication")
+@RequestMapping("/publication")
 public class PublicationController {
 
     private final PublicationService publicationService;
@@ -19,10 +20,16 @@ public class PublicationController {
         this.publicationService = publicationService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> createPublicationWithVehicle(@RequestBody PublicationVehicleRequestDto dto){
-//        publicationService.createPublicationWithVehicle(dto);
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Publication and Vehicle created successfully");
-//    }
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("dto", new PublicationVehicleRequestDto());
+        return "publication/create";
+    }
+
+    @PostMapping("/create")
+    public String handleCreateForm(@ModelAttribute("dto") PublicationVehicleRequestDto dto,
+                                   Principal principal) {
+        publicationService.createPublicationWithVehicle(dto);
+        return "redirect:/"; // Or redirect to details
+    }
 }

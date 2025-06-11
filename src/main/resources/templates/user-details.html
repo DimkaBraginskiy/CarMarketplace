@@ -7,6 +7,25 @@
 </head>
 <body class="bg-light">
 
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+  <a class="navbar-brand fw-bold" href="/" style="font-size: 1.5rem;">
+    <img src="/img/logo.png" alt="Logo" height="100" class="me-2"> Car Marketplace
+  </a>
+
+  <div class="d-flex ms-auto align-items-center">
+    <div sec:authorize="isAuthenticated()">
+      <a th:href="@{/user/details}" class="nav-link">
+        <i class="bi bi-person-circle fs-4"></i>
+      </a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+      <a th:href="@{/login}" class="btn btn-outline-primary me-2">Login</a>
+      <a th:href="@{/register}" class="btn btn-outline-success">Register</a>
+    </div>
+  </div>
+</nav>
+
 <div class="container mt-5">
   <h2>User Account Details</h2>
 

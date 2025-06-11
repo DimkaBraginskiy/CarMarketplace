@@ -40,6 +40,7 @@
 
 <!-- Search Bar -->
 <div class="container mt-4">
+
     <form th:action="@{/}" method="get" th:object="${filter}" class="row g-2 bg-primary bg-opacity-10 p-3 rounded">
 
         <div class="col-md-2">
@@ -115,10 +116,28 @@
 </div>
 
 
+
+
 <!-- Vehicle Publications -->
 <div class="container mt-4">
+
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/publication/create}" class="btn btn-outline-success me-2">
+            <i class="bi bi-plus-circle"></i> Publish Vehicle
+        </a>
+
+        <a th:href="@{/publication/create}" class="btn btn-outline-success me-2">
+            <i class="bi nav-bar-toggle-icon"></i> List my Publications
+        </a>
+    </div>
+    <br>
+
     <div th:each="pub : ${publications}">
         <a th:href="@{'/vehicle/' + ${pub.vehicleId}}" class="text-decoration-none text-dark">
+
+
+
+
             <div class="card mb-3 p-3 bg-light d-flex flex-row align-items-center">
                 <img th:src="@{'/img/vehicle-' + ${pub.vehicleId} + '.jpeg'}"
                      class="me-3"
