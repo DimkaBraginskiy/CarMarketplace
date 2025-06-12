@@ -8,7 +8,9 @@ import org.example.carmarketplace.Mappers.PublicationMapper;
 import org.example.carmarketplace.Models.*;
 import org.example.carmarketplace.Repositories.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -34,21 +36,20 @@ public class PublicationService {
         this.colorRepository = colorRepository;
     }
 
-    public void createPublicationWithVehicleFromForm(PublicationVehicleRequestDto dto, String userEmail) {
-        User owner = userRepo.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Brand brand = brandRepo.findById(dto.getBrandId())
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
-
-        Color color = colorRepository.findById(dto.getColorId())
-                .orElseThrow(() -> new RuntimeException("Color not found"));
+    public void createPublicationWithVehicleFromForm(PublicationVehicleRequestDto dto, String userEmail, MultipartFile image) throws IOException {
+        User owner = userRepo.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
+        Brand brand = brandRepo.findById(dto.getBrandId()).orElseThrow(() -> new RuntimeException("Brand not found"));
+        Color color = colorRepository.findById(dto.getColorId()).orElseThrow(() -> new RuntimeException("Color not found"));
 
         List<ComfortFeatures> comfortFeatures = comfortRepo.findAllById(dto.getComfortFeatureIds());
         List<FuelType> fuelTypes = fuelRepo.findAllById(dto.getFuelTypeIds());
 
         Vehicle vehicle = mapper.toVehicle(dto, owner, brand, comfortFeatures, fuelTypes);
         vehicle.setColor(color);
+
+        if (image != null && !image.isEmpty()) {
+            vehicle.setImage(image.getBytes()); // save image as BLOB
+        }
 
         vehicle = vehicleRepo.save(vehicle);
         Publication publication = mapper.toPublication(dto, vehicle);

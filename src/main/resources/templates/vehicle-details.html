@@ -32,8 +32,10 @@
   <h4>Found vehicle:</h4>
   <div class="card p-4 bg-light d-flex flex-row align-items-start justify-content-between">
 
-    <img th:src="@{'/img/vehicle-' + ${vehicle.vehicleId} + '.jpeg'}"
-         class="me-4" style="width: 300px; height: auto; object-fit: cover; border-radius: 6px;">
+    <img th:src="@{'/vehicle/image/' + ${vehicle.vehicleId}}"
+         class="img-fluid rounded me-4"
+         style="max-width: 300px; height: auto; object-fit: cover;">
+
 
     <div class="flex-grow-1">
       <h4 th:text="${vehicle.brandName} + ' ' + ${vehicle.engineName}">Car Model</h4>

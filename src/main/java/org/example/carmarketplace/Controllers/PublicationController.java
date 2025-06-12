@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -45,10 +47,13 @@ public class PublicationController {
     }
 
     @PostMapping("/create")
-    public String handleCreateForm(@ModelAttribute("dto") PublicationVehicleRequestDto dto,
-                                   Principal principal) {
+    public String handleCreateForm(
+            @ModelAttribute("dto") PublicationVehicleRequestDto dto,
+            @RequestParam("image") MultipartFile image,
+            Principal principal) throws IOException {
+
         String email = principal.getName();
-        publicationService.createPublicationWithVehicleFromForm(dto, email);
+        publicationService.createPublicationWithVehicleFromForm(dto, email, image);
         return "redirect:/";
     }
 

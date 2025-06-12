@@ -43,7 +43,7 @@
 
 <div class="container mt-4">
   <h2>Publish Your Vehicle</h2>
-  <form th:action="@{/publication/create}" th:object="${dto}" method="post">
+  <form th:action="@{/publication/create}" th:object="${dto}" method="post" enctype="multipart/form-data">
 
     <!-- VIN, Plate, Production Date, Mileage -->
     <div class="mb-3"><label>VIN</label><input th:field="*{vin}" class="form-control"/></div>
@@ -105,6 +105,11 @@
       <select th:field="*{colorId}" class="form-select">
         <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"></option>
       </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="image">Upload Vehicle Image</label>
+      <input type="file" name="image" id="image" class="form-control" accept="image/*">
     </div>
 
     <!-- Publication details -->

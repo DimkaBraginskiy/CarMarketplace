@@ -14,6 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class VehicleController {
@@ -33,4 +38,16 @@ public class VehicleController {
         model.addAttribute("vehicle", dto);
         return "vehicle-details";
     }
+
+    @GetMapping("/vehicle/image/{id}")
+    public ResponseEntity<byte[]> getVehicleImage(@PathVariable Long id) {
+        byte[] imageData = vehicleService.getVehicleImageById(id);
+        if (imageData == null) return ResponseEntity.notFound().build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Adjust based on format
+        return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
+    }
+
+
 }
