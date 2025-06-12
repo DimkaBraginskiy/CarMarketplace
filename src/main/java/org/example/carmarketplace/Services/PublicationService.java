@@ -2,6 +2,7 @@ package org.example.carmarketplace.Services;
 
 import org.example.carmarketplace.DTOs.Request.PublicationVehicleRequestDto;
 import org.example.carmarketplace.DTOs.Request.VehicleFilterDto;
+import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
 import org.example.carmarketplace.ENUMs.VehicleType;
 import org.example.carmarketplace.Mappers.PublicationMapper;
 import org.example.carmarketplace.Models.*;
@@ -33,22 +34,23 @@ public class PublicationService {
         this.colorRepository = colorRepository;
     }
 
-    public void createPublicationWithVehicle(PublicationVehicleRequestDto dto) {
-        User owner = userRepo.findById(dto.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
+    public void createPublicationWithVehicleFromForm(PublicationVehicleRequestDto dto, String userEmail) {
+        User owner = userRepo.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        Brand brand = brandRepo.findById(dto.getBrandId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
 
-        Brand brand = brandRepo.findById(dto.getBrandId()).orElseThrow(() -> new RuntimeException("brand not found"));
-
-//        Color color = colorRepository.findById(dto.getColorId())
-//                .orElseThrow(() -> new RuntimeException("Color not found"));
-
+        Color color = colorRepository.findById(dto.getColorId())
+                .orElseThrow(() -> new RuntimeException("Color not found"));
 
         List<ComfortFeatures> comfortFeatures = comfortRepo.findAllById(dto.getComfortFeatureIds());
         List<FuelType> fuelTypes = fuelRepo.findAllById(dto.getFuelTypeIds());
 
         Vehicle vehicle = mapper.toVehicle(dto, owner, brand, comfortFeatures, fuelTypes);
-        vehicle = vehicleRepo.save(vehicle);
+        vehicle.setColor(color);
 
+        vehicle = vehicleRepo.save(vehicle);
         Publication publication = mapper.toPublication(dto, vehicle);
         publicationRepo.save(publication);
     }
@@ -64,5 +66,25 @@ public class PublicationService {
     public Publication getPublicationById(Long id) {
         return publicationRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Publication not found"));
+    }
+
+    public List<PublicationVehicleResponseDto> getUserPublications(String email) {
+        User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        List<Publication> publications = publicationRepo.findByVehicleOwnerId(user.getId());
+        return publications.stream()
+                .map(PublicationMapper::toCardDto)
+                .toList();
+    }
+
+    public void toggleActiveStatus(Long publicationId, String email) {
+        Publication pub = publicationRepo.findById(publicationId)
+                .orElseThrow(() -> new RuntimeException("Publication not found"));
+
+        if (!pub.getVehicle().getOwner().getEmail().equals(email)) {
+            throw new SecurityException("Not your publication");
+        }
+
+        pub.setActive(!pub.isActive());
+        publicationRepo.save(pub);
     }
 }

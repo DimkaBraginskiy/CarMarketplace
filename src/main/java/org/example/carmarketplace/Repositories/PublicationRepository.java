@@ -32,4 +32,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Long>,
     List<Publication> searchByKeywordAndVehicleType(
             @Param("keyword") String keyword,
             @Param("vehicleType") VehicleType vehicleType);
+
+    @Query("SELECT p FROM Publication p WHERE p.vehicle.owner.id = :ownerId")
+    List<Publication> findByVehicleOwnerId(@Param("ownerId") Long ownerId);
 }

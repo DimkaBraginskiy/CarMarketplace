@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Publish Vehicle</title>
@@ -77,23 +79,31 @@
     <!-- Enums -->
     <div class="mb-3"><label>Condition</label>
       <select th:field="*{vehicleCondition}" class="form-select">
-        <option th:each="vc : ${vehicleConditions}" th:value="${vc}" th:text="${vc}"/>
+        <option value="" disabled selected>Select Condition</option>
+        <option th:each="vc : ${vehicleConditions}" th:value="${vc}" th:text="${vc}"></option>
       </select>
     </div>
+
     <div class="mb-3"><label>Vehicle Type</label>
       <select th:field="*{vehicleType}" class="form-select">
-        <option th:each="vt : ${vehicleTypes}" th:value="${vt}" th:text="${vt}"/>
+        <option value="" disabled selected>Select Vehicle Type</option>
+        <option th:each="vt : ${vehicleTypes}" th:value="${vt}" th:text="${vt}"></option>
       </select>
     </div>
-    <div class="mb-3"><label>Gearbox</label>
-      <select th:field="*{gearboxType}" class="form-select">
-        <option th:each="gt : ${gearboxTypes}" th:value="${gt}" th:text="${gt}"/>
-      </select>
-    </div>
+
+  <!--    <div class="mb-3"><label>Gearbox Type</label>-->
+  <!--      <select th:field="*{gearboxType}" class="form-select">-->
+  <!--        <option value="" disabled selected>Select Gearbox</option>-->
+  <!--        <option th:each="gt : ${gearboxTypes}" th:value="${gt}" th:text="${gt}"></option>-->
+  <!--      </select>-->
+  <!--    </div>-->
+
+
+
     <div class="mb-3">
       <label>Color</label>
       <select th:field="*{colorId}" class="form-select">
-        <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"/>
+        <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"></option>
       </select>
     </div>
 

@@ -10,7 +10,7 @@ public class Publication {
     private Long id;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private boolean isActive;
 
     @Column(length = 500, nullable = true)
     private String description;
@@ -22,7 +22,7 @@ public class Publication {
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    public Publication(Long id, Boolean isActive, String description, Double price, Vehicle vehicle) {
+    public Publication(Long id, boolean isActive, String description, Double price, Vehicle vehicle) {
         this.id = id;
         this.isActive = isActive;
         this.description = description;
@@ -38,7 +38,7 @@ public class Publication {
         this.id = id;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
@@ -58,10 +58,6 @@ public class Publication {
         return id;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -72,5 +68,9 @@ public class Publication {
 
     public Vehicle getVehicle() {
         return vehicle;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

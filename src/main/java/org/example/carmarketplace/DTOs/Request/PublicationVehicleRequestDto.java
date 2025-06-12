@@ -1,5 +1,6 @@
 package org.example.carmarketplace.DTOs.Request;
 
+import org.antlr.v4.runtime.misc.NotNull;
 import org.example.carmarketplace.ENUMs.GearboxType;
 import org.example.carmarketplace.ENUMs.VehicleCondition;
 import org.example.carmarketplace.ENUMs.VehicleType;
@@ -19,16 +20,21 @@ public class PublicationVehicleRequestDto {
     private Long ownerId;
     private Long brandId;
     private VehicleCondition vehicleCondition;
-    private GearboxType gearboxType;
+    //private GearboxType gearboxType;
     private VehicleType vehicleType;
     private List<Long> comfortFeatureIds;
     private List<Long> fuelTypeIds;
+    private Long colorId;
 
     // Publication fields
     private String description;
     private Double price;
 
-    public PublicationVehicleRequestDto(String vin, String licensePlate, LocalDate productionDate, Integer mileage, String engineName, Double horsePower, Long ownerId, Long brandId, VehicleCondition vehicleCondition, GearboxType gearboxType, VehicleType vehicleType, List<Long> comfortFeatureIds, List<Long> fuelTypeIds, String description, Double price) {
+    public PublicationVehicleRequestDto(String vin, String licensePlate, LocalDate productionDate, Integer mileage,
+                                        String engineName, Double horsePower, Long ownerId, Long brandId,
+                                        VehicleCondition vehicleCondition,  VehicleType vehicleType,
+                                        List<Long> comfortFeatureIds, List<Long> fuelTypeIds, String description,
+                                        Double price, Long colorId) {
         this.vin = vin;
         this.licensePlate = licensePlate;
         this.productionDate = productionDate;
@@ -38,15 +44,32 @@ public class PublicationVehicleRequestDto {
         this.ownerId = ownerId;
         this.brandId = brandId;
         this.vehicleCondition = vehicleCondition;
-        this.gearboxType = gearboxType;
+        //this.gearboxType = gearboxType; // allow correct enum to bind
         this.vehicleType = vehicleType;
         this.comfortFeatureIds = comfortFeatureIds;
         this.fuelTypeIds = fuelTypeIds;
         this.description = description;
         this.price = price;
+        this.colorId = colorId;
     }
 
     public PublicationVehicleRequestDto() {
+    }
+
+//    public GearboxType getGearboxType() {
+//        return gearboxType;
+//    }
+//
+//    public void setGearboxType(GearboxType gearboxType) {
+//        this.gearboxType = gearboxType;
+//    }
+
+    public Long getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(Long colorId) {
+        this.colorId = colorId;
     }
 
     public void setVin(String vin) {
@@ -85,9 +108,6 @@ public class PublicationVehicleRequestDto {
         this.vehicleCondition = vehicleCondition;
     }
 
-    public void setGearboxType(GearboxType gearboxType) {
-        this.gearboxType = gearboxType;
-    }
 
     public void setVehicleType(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
@@ -145,9 +165,6 @@ public class PublicationVehicleRequestDto {
         return vehicleCondition;
     }
 
-    public GearboxType getGearboxType() {
-        return gearboxType;
-    }
 
     public VehicleType getVehicleType() {
         return vehicleType;

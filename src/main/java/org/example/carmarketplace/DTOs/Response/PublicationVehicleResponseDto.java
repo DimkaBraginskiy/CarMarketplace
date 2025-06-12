@@ -13,10 +13,12 @@ public class PublicationVehicleResponseDto {
     private double price;
     private String description;
 
+    private boolean active;
+
     public PublicationVehicleResponseDto(Long vehicleId, String brandName, String engineName,
                                          String gearboxType, int year, String fuelType,
                                          String color, double horsePower, String condition,
-                                         double price, String description) {
+                                         double price, String description, boolean active) {
         this.vehicleId = vehicleId;
         this.brandName = brandName;
         this.engineName = engineName;
@@ -28,7 +30,12 @@ public class PublicationVehicleResponseDto {
         this.condition = condition;
         this.price = price;
         this.description = description;
+
+        this.active =  active;
     }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
 
     public String getDescription() {

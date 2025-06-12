@@ -3,6 +3,7 @@ package org.example.carmarketplace.Mappers;
 import org.example.carmarketplace.DTOs.Request.PublicationVehicleRequestDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleDetailedResponseDto;
 import org.example.carmarketplace.DTOs.Response.PublicationVehicleResponseDto;
+import org.example.carmarketplace.ENUMs.GearboxType;
 import org.example.carmarketplace.Models.*;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,8 @@ public class PublicationMapper {
                 v.getHorsePower(),
                 v.getVehicleCondition().toString(),
                 publication.getPrice(),
-                publication.getDescription()
+                publication.getDescription(),
+                publication.isActive()
         );
     }
 
@@ -63,7 +65,9 @@ public class PublicationMapper {
         vehicle.setBrand(brand);
         vehicle.setVehicleType(dto.getVehicleType());
         vehicle.setVehicleCondition(dto.getVehicleCondition());
-        vehicle.setGearboxType(dto.getGearboxType());
+
+        vehicle.setGearboxType(GearboxType.MECHANICAL);
+
         vehicle.setComfortFeatures(comfortFeatures);
         vehicle.setFuelTypes(fuelTypes);
         return vehicle;
